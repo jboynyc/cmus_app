@@ -21,18 +21,18 @@ Thanks to the creators for making them available under permissive licenses.
 
 - Install `bottle` and `sh`.
 
-    $ pip install bottle sh
+        $ pip install bottle sh
 
 - Edit the configuration file.
 - Run an instance of `cmus` using the `--listen` option.
 
-    $ cmus --listen <host>
+        $ cmus --listen <host>
 
 - Set a password in `cmus` using `:set passwd=<passwd>`.
 - Run the app:
 
-    $ cd cmus_app
-    $ python app.py [config-file]
+        $ cd cmus_app
+        $ python app.py [config-file]
 
 - Open your browser and navigate to `http://<host>:<port>`.
 
