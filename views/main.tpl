@@ -129,11 +129,12 @@
         updateStatus()
     }))
     $(".cmd-btn").on('click', (function(){
-        $("div#result").css('opacity', '1');
         var cmd = $(this).attr('title');
         postCommand(cmd);
-        $("div#result").animate({opacity: 0}, 750, 'ease-out');
         updateStatus();
+    }))
+    $("div#result").on('click', (function(){
+        $(this).empty()
     }))
     Zepto(function() {
         updateStatus()
