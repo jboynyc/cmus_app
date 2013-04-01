@@ -1,8 +1,8 @@
 # cmus-remote web app
 
-This is a web app to remote control a server instance of
-[`cmus`](http://cmus.sf.net), a powerful music player. So far it only supports
-basic player and volume controls, not adding items to the playlist. 
+This is a web app to control a server instance of [`cmus`](http://cmus.sf.net),
+a powerful music player, remotely. So far it only supports basic player and
+volume controls, not adding items to the playlist. 
 
 ![Screenshot of cmus_app running in Firefox](cmus-app-screenshot.png)
 
@@ -19,10 +19,21 @@ Thanks to the creators for making them available under permissive licenses.
 
 ## Instructions
 
-- Install `bottle` and `sh`. Both are available with `pip`.
-- Edit the configuration section of `app.py`.
-- Run an instance of `cmus` on the specified host using the `--listen` option.
-- Run the app: `$ cd cmus_app; python app.py`
-- Open your browser and navigate to ``http://<host>:<port>``.
+- Install `bottle` and `sh`.
+
+   $ pip install bottle sh
+
+- Edit the configuration file.
+- Run an instance of `cmus` using the `--listen` option.
+
+   $ cmus --listen <host>
+
+- Set a password in `cmus` using `:set passwd=<passwd>`.
+- Run the app:
+
+   $ cd cmus_app
+   $ python app.py [config-file]
+
+- Open your browser and navigate to `http://<host>:<port>`.
 
 Enjoy!
