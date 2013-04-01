@@ -19,7 +19,9 @@ Thanks to the creators for making them available under permissive licenses.
 
 ## Instructions
 
-- Install `bottle` and `sh`.
+- Install `bottle` and `sh` on the host that will be running the web app. (The
+  web app can run on the same host as `cmus` or a different one, but both will
+  have to have `cmus` installed.)
 
         $ pip install bottle sh
 
