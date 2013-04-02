@@ -105,11 +105,11 @@
             if (response.playing == true) {var status = '<p>'}
             if (response.playing == false) {var status = '<p class="gray">'}
             if (response.artist != null & response.title != null & response.album != null & response.date != null)
-                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ', ' + response.date + ')'}
+                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ', ' + response.date.substring(0,4) + ')'}
             else if (response.artist != null & response.title != null & response.album != null)
                 {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ')'}
             else if (response.artist != null & response.title != null & response.date != null)
-                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.date + ')'}
+                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.date.substring(0,4) + ')'}
             else if (response.artist != null & response.title != null)
                 {status += response.artist + ': <strong>' + response.title + '</strong>'}
             else if (response.title != null)
