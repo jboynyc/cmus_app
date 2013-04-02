@@ -19,22 +19,31 @@ Thanks to the creators for making them available under permissive licenses.
 
 ## Instructions
 
-- Install `bottle` and `sh` on the host that will be running the web app. (The
-  web app can run on the same host as `cmus` or a different one, but both will
-  have to have `cmus` installed.)
+The web app can run on the same host as the `cmus` instance you want to control
+or a different one, but both hosts will have to have `cmus` installed.
+
+### On the web app host
+
+- Install `bottle` and `sh` and fetch cmus_app.
 
         $ pip install bottle sh
+        $ git clone git://github.com/jboynyc/cmus_app
 
 - Edit the configuration file.
+- Run the app:
+
+        $ cd cmus_app
+        $ python app.py [config-file]
+
+### On the cmus host
+
 - Run an instance of `cmus` using the `--listen` option.
 
         $ cmus --listen <host>
 
 - Set a password in `cmus` using `:set passwd=<passwd>`.
-- Run the app:
 
-        $ cd cmus_app
-        $ python app.py [config-file]
+### Anywhere on your network
 
 - Open your browser and navigate to `http://<host>:<port>`.
 
