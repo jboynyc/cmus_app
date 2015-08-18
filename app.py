@@ -3,6 +3,15 @@ import sys
 from ConfigParser import SafeConfigParser
 from bottle import route, post, run, request, view, response, static_file
 from sh import cmus_remote
+from optparse import OptionParser
+
+parser = OptionParser()
+parser.add_option("-n", "--noconfig", action="store_true", dest="noconfig",
+                  help="do not use config file", default=False)
+parser.add_option("-p", "--port", dest="port",
+                  help="cmus_app port", default=8080)
+parser.add_option("-a", "--app-host", dest="app_host",
+                  help="cmus_app host", default='localhost')
 
 
 def read_config(config_file):
@@ -71,12 +80,22 @@ def favicon():
 if __name__ == '__main__':
     # configuration file either supplied via command line  
     # or assumed to be in one of the default locations
-    if len(sys.argv) > 1:
-        print sys.argv
-        CONFIG=sys.argv[1:]
+
+    (options, args) = parser.parse_args()
+    if options.noconfig is True:
+        settings = {
+            'cmus_host': 'localhost'
+        }
+        Remote = cmus_remote.bake()
+        run(host=options.app_host, port=options.port)
     else:
-        CONFIG=['config','config.ini','.config']
-    settings = read_config(CONFIG)
-    Remote = cmus_remote.bake('--server', settings['cmus_host'],'--passwd', settings['cmus_passwd']) 
-    run(host=settings['app_host'], port=settings['app_port'])
+        if len(sys.argv) > 1:
+            print sys.argv
+            CONFIG=sys.argv[1:]
+        else:
+            CONFIG=['config','config.ini','.config']
+
+        settings = read_config(CONFIG)
+        Remote = cmus_remote.bake(['--server', settings['cmus_host'], '--passwd', settings['cmus_passwd']])
+        run(host=settings['app_host'], port=settings['app_port'])
 
