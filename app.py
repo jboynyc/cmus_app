@@ -100,7 +100,7 @@ def favicon():
 
 
 if __name__ == '__main__':
-    options, args = option_parser.parse_args()
+    options, _ = option_parser.parse_args()
     if options.config_file:
         settings = read_config(config_file)
     else:
