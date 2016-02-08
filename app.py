@@ -1,5 +1,4 @@
 #!/usr/bin/env python2.7
-import sys
 from ConfigParser import SafeConfigParser
 from optparse import OptionParser
 from bottle import route, post, run, request, view, response, static_file
@@ -24,7 +23,7 @@ def read_config(config_file):
     config_parser = SafeConfigParser()
     n = config_parser.read(config_file)
     if not len(n):
-        raise FileNotFoundError(config_file)
+        raise IOError('File not found: {}'.format(config_file))
     section = 'cmus_app'
     required = ['cmus_host', 'cmus_passwd']
     for S in required:
@@ -102,7 +101,7 @@ def favicon():
 if __name__ == '__main__':
     options, _ = option_parser.parse_args()
     if options.config_file:
-        settings = read_config(config_file)
+        settings = read_config(options.config_file)
     else:
         settings = vars(options)
     Remote = cmus_remote.bake(['--server', settings['cmus_host'],
