@@ -92,42 +92,45 @@
 </div>
 <script src="/static/zepto.min.js"></script>
 <script type="text/javascript">
-    function postCommand(command){
-        $.post('/cmd', {command: command}, function(response){
-            if (response.result == 0) {var msg = '<p class="green label"><i class="icon-ok"></i> ' + command + '</p>'} 
-            else {var msg = '<p class="red label"><i class="icon-remove"></i> ' + command + '</p>'}
-            if (response.output) msg += '<pre>' + response.output + '</pre>';
-            $("div#result").html(msg)
-        }, 'json');
+    function runCommand(command){
+        $.ajax({type: 'POST', url: '/cmd', data: {command: command}, context: $("div#result"),
+            error: function(){
+                var msg = '<p class="red label"><i class="icon-remove"></i> ' + command + '</p>';
+                this.html(msg)
+            },
+            success: function(){
+                var msg = '<p class="green label"><i class="icon-ok"></i> ' + command + '</p>'
+                this.html(msg)
+            }})
     }
     function updateStatus(){
         $.ajax({url: '/status', dataType: 'json', context: $("div#status"), 
             error: function(){
-                var status = '<p class="error">Connection to <code>cmus</code> cannot be established.</p>';
-                this.html(status)
+                var msg = '<p class="error">Connection to <code>cmus</code> cannot be established.</p>';
+                this.html(msg)
             },
             success: function(response){
-                if (response.playing == true) {var status = '<p>'}
-                if (response.playing == false) {var status = '<p class="gray">'}
+                if (response.playing == true) {var msg = '<p>'}
+                if (response.playing == false) {var msg = '<p class="gray">'}
                 if (response.artist != null & response.title != null & response.album != null & response.date != null)
-                    {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ', ' + response.date.substring(0,4) + ')'}
+                    {msg += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ', ' + response.date.substring(0,4) + ')'}
                 else if (response.artist != null & response.title != null & response.album != null)
-                    {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ')'}
+                    {msg += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ')'}
                 else if (response.artist != null & response.title != null & response.date != null)
-                    {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.date.substring(0,4) + ')'}
+                    {msg += response.artist + ': <strong>' + response.title + '</strong> (' + response.date.substring(0,4) + ')'}
                 else if (response.artist != null & response.title != null)
-                    {status += response.artist + ': <strong>' + response.title + '</strong>'}
+                    {msg += response.artist + ': <strong>' + response.title + '</strong>'}
                 else if (response.title != null)
-                    {status += '<strong>' + response.title + '</strong>'}
+                    {msg += '<strong>' + response.title + '</strong>'}
                 else if (response.artist != null)
-                    {status += response.artist + ': <strong>(unknown)</strong>'}
-                else {status += '<em>none/unknown</em>'}
-                status += '</p><span class="vol gray">';
-                if (response.vol_left != null) {status += response.vol_left}
-                if (response.shuffle == 'true') {status += ' <i class="icon-random"></i>'}
-                if (response.repeat == 'true') {status += ' <i class="icon-refresh"></i>'}
-                status += '</span>';
-                this.html(status)
+                    {msg += response.artist + ': <strong>(unknown)</strong>'}
+                else {msg += '<em>none/unknown</em>'}
+                msg += '</p><span class="vol gray">';
+                if (response.vol_left != null) {msg += response.vol_left}
+                if (response.shuffle == 'true') {msg += ' <i class="icon-random"></i>'}
+                if (response.repeat == 'true') {msg += ' <i class="icon-refresh"></i>'}
+                msg += '</span>';
+                this.html(msg)
             }})
     }
     $(".status-btn").on('click', (function() {
@@ -135,7 +138,7 @@
     }))
     $(".cmd-btn").on('click', (function(){
         var cmd = $(this).attr('title');
-        postCommand(cmd);
+        runCommand(cmd);
         updateStatus();
     }))
     $("div#result").on('click', (function(){

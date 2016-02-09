@@ -64,9 +64,11 @@ def run_command():
     if command in legal_commands:
         try:
             out = Remote('-C', legal_commands[command])
+            response.status = 200
             return {'result': out.exit_code, 'output': out.stdout.decode()}
         except:
-            return {'result': False}
+            response.status = 503
+            return None
     else:
         pass
 
