@@ -4,7 +4,7 @@
     <title>cmus on {{host}}</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/kube.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/kube5.min.css"/>
     <link rel="stylesheet" type="text/css" href="/static/font-awesome.min.css"/>
     <style type="text/css">
         .wrapper {
@@ -101,29 +101,34 @@
         }, 'json');
     }
     function updateStatus(){
-        $.ajax({url: '/status', dataType: 'json', context: $("div#status"), success: function(response){
-            if (response.playing == true) {var status = '<p>'}
-            if (response.playing == false) {var status = '<p class="gray">'}
-            if (response.artist != null & response.title != null & response.album != null & response.date != null)
-                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ', ' + response.date.substring(0,4) + ')'}
-            else if (response.artist != null & response.title != null & response.album != null)
-                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ')'}
-            else if (response.artist != null & response.title != null & response.date != null)
-                {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.date.substring(0,4) + ')'}
-            else if (response.artist != null & response.title != null)
-                {status += response.artist + ': <strong>' + response.title + '</strong>'}
-            else if (response.title != null)
-                {status += '<strong>' + response.title + '</strong>'}
-            else if (response.artist != null)
-                {status += response.artist + ': <strong>(unknown)</strong>'}
-            else {status += '<em>none/unknown</em>'}
-            status += '</p><span class="vol gray">';
-            if (response.vol_left != null) {status += response.vol_left}
-            if (response.shuffle == 'true') {status += ' <i class="icon-random"></i>'}
-            if (response.repeat == 'true') {status += ' <i class="icon-refresh"></i>'}
-            status += '</span>';
-            this.html(status)
-        }})
+        $.ajax({url: '/status', dataType: 'json', context: $("div#status"), 
+            error: function(){
+                var status = '<p class="error">Connection to <code>cmus</code> cannot be established.</p>';
+                this.html(status)
+            },
+            success: function(response){
+                if (response.playing == true) {var status = '<p>'}
+                if (response.playing == false) {var status = '<p class="gray">'}
+                if (response.artist != null & response.title != null & response.album != null & response.date != null)
+                    {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ', ' + response.date.substring(0,4) + ')'}
+                else if (response.artist != null & response.title != null & response.album != null)
+                    {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.album + ')'}
+                else if (response.artist != null & response.title != null & response.date != null)
+                    {status += response.artist + ': <strong>' + response.title + '</strong> (' + response.date.substring(0,4) + ')'}
+                else if (response.artist != null & response.title != null)
+                    {status += response.artist + ': <strong>' + response.title + '</strong>'}
+                else if (response.title != null)
+                    {status += '<strong>' + response.title + '</strong>'}
+                else if (response.artist != null)
+                    {status += response.artist + ': <strong>(unknown)</strong>'}
+                else {status += '<em>none/unknown</em>'}
+                status += '</p><span class="vol gray">';
+                if (response.vol_left != null) {status += response.vol_left}
+                if (response.shuffle == 'true') {status += ' <i class="icon-random"></i>'}
+                if (response.repeat == 'true') {status += ' <i class="icon-refresh"></i>'}
+                status += '</span>';
+                this.html(status)
+            }})
     }
     $(".status-btn").on('click', (function() {
         updateStatus()

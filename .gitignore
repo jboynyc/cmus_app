@@ -1,0 +1,9 @@
+build/
+dist/
+__pycache__/
+[A-Z]*/
+*.egg-info/
+*.*~
+*.swp
+*.pyc
+*.yaml
