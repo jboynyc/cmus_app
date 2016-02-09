@@ -1,21 +1,22 @@
 # cmus-remote web app
 
 This is a web app to control a server instance of
-[`cmus`](https://cmus.github.io/), a powerful music player, remotely. So far it
-only supports basic player and volume controls, not adding items to the
-playlist. 
+[`cmus`](https://cmus.github.io/), a powerful music player, remotely. It only
+supports basic player and volume controls, not adding items to the playlist. 
 
 ![Screenshot of cmus_app running in Firefox](cmus-app-screenshot.png)
 
 ## Dependencies
 
-- Python (tested with 2.7)
-- [`bottle`](http://bottlepy.org)
-- [`sh`](http://amoffat.github.com/sh/)
+`cmus` is required, of course. The web app is written in Python and has been
+tested with Python 2.7, Python 3.5, and PyPy 4.0. 
+
+All other dependencies are included. They are [`bottle`](http://bottlepy.org)
+and [`sh`](http://amoffat.github.com/sh/) (both MIT licensed).
 
 The web app also makes use of [Zepto](http://zeptojs.com/),
 [Kube](http://imperavi.com/kube), and [Font
-Awesome](http://fortawesome.github.com/Font-Awesome/). These are all included.
+Awesome](http://fortawesome.github.com/Font-Awesome/). These are also included.
 Thanks to the creators for making them available under permissive licenses. 
 
 ## Instructions
@@ -33,9 +34,8 @@ or a different one, but both hosts will have to have `cmus` installed.
 
 ### On the web app host
 
-- Install `bottle` and `sh` and fetch cmus_app.
+- Fetch cmus_app:
 
-        $ pip install bottle sh
         $ git clone git://github.com/jboynyc/cmus_app
         $ cd cmus_app
 

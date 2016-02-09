@@ -1,10 +1,10 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 from optparse import OptionParser
 try:
-    from ConfigParser import SafeConfigParser
-except ImportError:
     from configparser import SafeConfigParser
-from bottle import route, post, run, request, view, response, static_file
+except ImportError:
+    from ConfigParser import SafeConfigParser
+from bottle import response, route, post, run, request, view, response, static_file
 from sh import cmus_remote
 
 
@@ -64,7 +64,7 @@ def run_command():
     if command in legal_commands:
         try:
             out = Remote('-C', legal_commands[command])
-            return {'result': out.exit_code, 'output': out.stdout}
+            return {'result': out.exit_code, 'output': out.stdout.decode()}
         except:
             return {'result': False}
     else:
@@ -74,7 +74,7 @@ def run_command():
 @route('/status')
 def get_status():
     try:
-        out = Remote('-Q').stdout.split('\n')
+        out = Remote('-Q').stdout.decode().split('\n')
         r = {}
         play = out[0].split()[1]
         if play == 'playing':
@@ -86,9 +86,11 @@ def get_status():
             k, v = i.split()[1], i.split()[2:]
             if len(v):
                 r[k] = ' '.join(v)
+        response.status = 200
         return r
     except:
-        pass
+        response.status = 503
+        return None
 
 
 @route('/static/<file>')
