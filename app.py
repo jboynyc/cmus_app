@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 from optparse import OptionParser
 try:
-    from configparser import SafeConfigParser
+    from configparser import ConfigParser
 except ImportError:
-    from ConfigParser import SafeConfigParser
+    from ConfigParser import SafeConfigParser as ConfigParser
 from bottle import abort, post, request, response, route, run, view, static_file
-from sh import cmus_remote
+from sh import cmus_remote, ErrorReturnCode_1
 
 
 option_parser = OptionParser()
@@ -22,16 +22,18 @@ option_parser.add_option('-p', '--app-port', dest='app_port',
 
 
 class ConfigFileNotFound(IOError):
+    '''Raised when the specified config file does not exist or is empty.'''
     pass
 
 
 class MissingSetting(Exception):
+    '''Raised when the config file is missing a required setting.'''
     pass
 
 
 def read_config(config_file):
     r = {}
-    config_parser = SafeConfigParser()
+    config_parser = ConfigParser()
     n = config_parser.read(config_file)
     if not len(n):
         raise ConfigFileNotFound(config_file)
@@ -64,9 +66,8 @@ def run_command():
     if command in legal_commands:
         try:
             out = Remote('-C', legal_commands[command])
-            response.status = 200
             return {'result': out.exit_code, 'output': out.stdout.decode()}
-        except:
+        except ErrorReturnCode_1:
             abort(503, 'Cmus not running.')
     else:
         abort(400, 'Invalid command.')
@@ -82,13 +83,13 @@ def get_status():
             r['playing'] = True
         elif play == 'stopped':
             r['playing'] = False
-        info = filter(lambda x: x if x.startswith('tag') or x.startswith('set') else None, out)
+        info = [i for i in out if i.startswith(('tag', 'set'))]
         for i in info:
             k, v = i.split()[1], i.split()[2:]
             if len(v):
                 r[k] = ' '.join(v)
         return r
-    except:
+    except ErrorReturnCode_1:
         abort(503, 'Cmus not running.')
 
 
