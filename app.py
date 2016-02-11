@@ -4,7 +4,7 @@ try:
     from configparser import SafeConfigParser
 except ImportError:
     from ConfigParser import SafeConfigParser
-from bottle import response, route, post, run, request, view, response, static_file
+from bottle import abort, post, request, response, route, run, view, static_file
 from sh import cmus_remote
 
 
@@ -67,11 +67,9 @@ def run_command():
             response.status = 200
             return {'result': out.exit_code, 'output': out.stdout.decode()}
         except:
-            response.status = 503
-            return None
+            abort(503, 'Cmus not running.')
     else:
-        response.status = 400
-        return None
+        abort(400, 'Invalid command.')
 
 
 @route('/status')
@@ -89,11 +87,9 @@ def get_status():
             k, v = i.split()[1], i.split()[2:]
             if len(v):
                 r[k] = ' '.join(v)
-        response.status = 200
         return r
     except:
-        response.status = 503
-        return None
+        abort(503, 'Cmus not running.')
 
 
 @route('/static/<file>')
