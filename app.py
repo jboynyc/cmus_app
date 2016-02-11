@@ -70,7 +70,8 @@ def run_command():
             response.status = 503
             return None
     else:
-        pass
+        response.status = 400
+        return None
 
 
 @route('/status')
