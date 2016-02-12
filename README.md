@@ -8,16 +8,14 @@ supports basic player and volume controls, not adding items to the playlist.
 
 ## Dependencies
 
-`cmus` is required, of course. The web app is written in Python and has been
+`cmus` is required, of course. The backend is written in Python and has been
 tested with Python 2.7, Python 3.5, and PyPy 4.0. 
 
-All other dependencies are included. They are [`bottle`](http://bottlepy.org)
-and [`sh`](http://amoffat.github.com/sh/) (both MIT licensed).
-
-The web app also makes use of [Zepto](http://zeptojs.com/),
-[Kube](http://imperavi.com/kube), and [Font
-Awesome](http://fortawesome.github.com/Font-Awesome/). These are also included.
-Thanks to the creators for making them available under permissive licenses. 
+All dependencies are bundled. They are [`bottle`](http://bottlepy.org) and
+[`sh`](http://amoffat.github.com/sh/). The frontend also makes use of
+[Zepto](http://zeptojs.com/), [Kube](http://imperavi.com/kube), and [Font
+Awesome](http://fortawesome.github.com/Font-Awesome/). Thanks to the creators
+for making them available under permissive licenses. 
 
 ## Instructions
 
