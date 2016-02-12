@@ -51,6 +51,6 @@ or a different one, but both hosts will have to have `cmus` installed.
 
 Enjoy!
 
-### Prior Art and Alternatives
+## Prior Art and Alternatives
 
 Take a look on the [cmus wiki](https://github.com/cmus/cmus/wiki/remote-control).
