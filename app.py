@@ -49,7 +49,10 @@ class MissingSetting(Exception):
 
 def read_config(config_file):
     r = {}
-    config_parser = ConfigParser()
+    try:
+        config_parser = ConfigParser(inline_comment_prefixes = ';')
+    except TypeError:
+        config_parser = ConfigParser()
     n = config_parser.read(config_file)
     if not len(n):
         raise ConfigFileNotFound(config_file)
