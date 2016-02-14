@@ -24,19 +24,6 @@ from bottle import abort, post, request, response, route, run, view, static_file
 from sh import cmus_remote, ErrorReturnCode_1
 
 
-option_parser = OptionParser()
-option_parser.add_option('-f', '--config', dest='config_file',
-                         help='Location of configuration file.')
-option_parser.add_option('-c', '--cmus-host', dest='cmus_host',
-                         help='cmus host', default='localhost')
-option_parser.add_option('-w', '--cmus-passwd', dest='cmus_passwd',
-                         help='cmus password', default='')
-option_parser.add_option('-a', '--app-host', dest='app_host',
-                         help='cmus_app host', default='localhost')
-option_parser.add_option('-p', '--app-port', dest='app_port',
-                         help='cmus_app port', default=8080)
-
-
 class ConfigFileNotFound(IOError):
     '''Raised when the specified config file does not exist or is empty.'''
     pass
@@ -50,7 +37,7 @@ class MissingSetting(Exception):
 def read_config(config_file):
     r = {}
     try:
-        config_parser = ConfigParser(inline_comment_prefixes = ';')
+        config_parser = ConfigParser(inline_comment_prefixes=';')
     except TypeError:
         config_parser = ConfigParser()
     n = config_parser.read(config_file)
@@ -125,6 +112,17 @@ def favicon():
 
 
 if __name__ == '__main__':
+    option_parser = OptionParser()
+    option_parser.add_option('-f', '--config', dest='config_file',
+                             help='Location of configuration file.')
+    option_parser.add_option('-c', '--cmus-host', dest='cmus_host',
+                             help='cmus host', default='localhost')
+    option_parser.add_option('-w', '--cmus-passwd', dest='cmus_passwd',
+                             help='cmus password', default='')
+    option_parser.add_option('-a', '--app-host', dest='app_host',
+                             help='cmus_app host', default='localhost')
+    option_parser.add_option('-p', '--app-port', dest='app_port',
+                             help='cmus_app port', default=8080)
     options, _ = option_parser.parse_args()
     if options.config_file:
         settings = read_config(options.config_file)
