@@ -1,3 +1,5 @@
+[![AGPL](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/jboynyc/cmus_app/master/LICENSE)
+
 # cmus-remote web app
 
 This is a web app to control a server instance of
