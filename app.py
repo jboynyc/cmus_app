@@ -116,13 +116,17 @@ if __name__ == '__main__':
     option_parser.add_option('-f', '--config', dest='config_file',
                              help='Location of configuration file.')
     option_parser.add_option('-c', '--cmus-host', dest='cmus_host',
-                             help='cmus host', default='localhost')
+                             help='Name of cmus host.',
+                             default='localhost')
     option_parser.add_option('-w', '--cmus-passwd', dest='cmus_passwd',
-                             help='cmus password', default='')
+                             help='Cmus password.',
+                             default='')
     option_parser.add_option('-a', '--app-host', dest='app_host',
-                             help='cmus_app host', default='localhost')
+                             help='Name of cmus_app host.',
+                             default='localhost')
     option_parser.add_option('-p', '--app-port', dest='app_port',
-                             help='cmus_app port', default=8080)
+                             help='Port cmus_app is listening on.',
+                             default=8080)
     options, _ = option_parser.parse_args()
     if options.config_file:
         settings = read_config(options.config_file)
