@@ -11,7 +11,7 @@ supports basic player and volume controls, not adding items to the playlist.
 ## Dependencies
 
 `cmus` is required, of course. The backend is written in Python and has been
-tested with Python 2.7, Python 3.5, and PyPy 4.0. 
+tested with Python 2.7, Python 3.5, PyPy 4.0, and Pyston 0.4.
 
 All dependencies are bundled. They are [`bottle`](http://bottlepy.org) and
 [`sh`](http://amoffat.github.com/sh/). The frontend also makes use of
