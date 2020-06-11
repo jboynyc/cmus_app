@@ -1,5 +1,7 @@
 [![AGPL](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/jboynyc/cmus_app/master/LICENSE)
 
+**This repository is in retirement. You may want to check out [this fork](https://github.com/ichier/cmus_app) of `cmus_app` instead.**
+
 # cmus-remote web app
 
 This is a web app to control a server instance of
